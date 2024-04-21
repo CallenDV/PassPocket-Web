@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PassPass</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding-top: 20px;
+  }
+  #sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  #sidebar li {
+    margin-bottom: 10px;
+  }
+  #sidebar li a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  #sidebar li a:hover {
+    background-color: #555;
+  }
+  #content {
+    margin-left: 250px;
+    padding: 20px;
+  }
+  .page {
+    display: none;
+  }
+  .page.active {
+    display: block;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  input[type="text"] {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <ul>
+    <li><a href="#" onclick="showPage('password-entry')">Password Entry</a></li>
+    <li><a href="#" onclick="showPage('password-generator')">Password Generator</a></li>
+    <li><a href="#" onclick="closePage()">Close</a></li>
+  </ul>
+</div>
+
+<div id="content">
+  <div id="password-entry" class="page active">
+    <h2>Password Entry</h2>
+    <input type="text" id="passwordInput" placeholder="Enter password">
+    <button onclick="storePassword()">Store Password</button>
+  </div>
+  
+  <div id="password-generator" class="page">
+    <h2>Password Generator</h2>
+    <p>Secure Password: <span id="generatedPassword"></span></p>
+    <button onclick="generatePassword()">Generate Password</button>
+  </div>
+</div>
+
+<script>
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+      page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  function storePassword() {
+    const password = document.getElementById('passwordInput').value;
+    localStorage.setItem('password', password);
+    alert('Password stored successfully!');
+  }
+
+  function generatePassword() {
+    const generatedPassword = Math.random().toString(36).slice(2);
+    document.getElementById('generatedPassword').textContent = generatedPassword;
+  }
+
+  function closePage() {
+    window.close();
+  }
+</script>
+
+</body>
+</html>
