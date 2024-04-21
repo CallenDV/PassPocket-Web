@@ -83,6 +83,7 @@
 <div id="sidebar">
   <ul>
     <li><a href="#" onclick="showPage('password-entry')">Password Entry</a></li>
+    <li><a href="#" onclick="showPage('password-generator')">Password Generator</a></li>
     <li><a href="#" onclick="showPage('password-display')">View Passwords</a></li>
     <li><a href="#" onclick="closePage()">Close</a></li>
   </ul>
@@ -94,6 +95,12 @@
     <input type="text" id="usernameInput" placeholder="Enter username">
     <input type="text" id="passwordInput" placeholder="Enter password">
     <button onclick="storePassword()">Store Password</button>
+  </div>
+  
+  <div id="password-generator" class="page">
+    <h2>Password Generator</h2>
+    <input type="text" id="generatedPassword" readonly>
+    <button onclick="generatePassword()">Generate Password</button>
   </div>
   
   <div id="password-display" class="page">
@@ -127,6 +134,16 @@
     alert('Password stored successfully!');
     document.getElementById('usernameInput').value = '';
     document.getElementById('passwordInput').value = '';
+  }
+
+  function generatePassword() {
+    const length = 12;
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      password += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+    document.getElementById('generatedPassword').value = password;
   }
 
   function displayPasswords() {
