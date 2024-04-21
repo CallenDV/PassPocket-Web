@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PassPass</title>
+<title>PassPass - Password Manager</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -67,6 +67,15 @@
     border-radius: 5px;
     border: 1px solid #ccc;
   }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
 </style>
 </head>
 <body>
@@ -74,7 +83,7 @@
 <div id="sidebar">
   <ul>
     <li><a href="#" onclick="showPage('password-entry')">Password Entry</a></li>
-    <li><a href="#" onclick="showPage('password-generator')">Password Generator</a></li>
+    <li><a href="#" onclick="showPage('password-display')">View Passwords</a></li>
     <li><a href="#" onclick="closePage()">Close</a></li>
   </ul>
 </div>
@@ -82,14 +91,19 @@
 <div id="content">
   <div id="password-entry" class="page active">
     <h2>Password Entry</h2>
+    <input type="text" id="usernameInput" placeholder="Enter username">
     <input type="text" id="passwordInput" placeholder="Enter password">
     <button onclick="storePassword()">Store Password</button>
   </div>
   
-  <div id="password-generator" class="page">
-    <h2>Password Generator</h2>
-    <p>Secure Password: <span id="generatedPassword"></span></p>
-    <button onclick="generatePassword()">Generate Password</button>
+  <div id="password-display" class="page">
+    <h2>Stored Passwords</h2>
+    <table id="passwordTable">
+      <tr>
+        <th>Username</th>
+        <th>Password</th>
+      </tr>
+    </table>
   </div>
 </div>
 
@@ -99,17 +113,29 @@
       page.classList.remove('active');
     });
     document.getElementById(pageId).classList.add('active');
+    if (pageId === 'password-display') {
+      displayPasswords();
+    }
   }
 
   function storePassword() {
+    const username = document.getElementById('usernameInput').value;
     const password = document.getElementById('passwordInput').value;
-    localStorage.setItem('password', password);
+    let passwords = JSON.parse(localStorage.getItem('passwords')) || [];
+    passwords.push({username, password});
+    localStorage.setItem('passwords', JSON.stringify(passwords));
     alert('Password stored successfully!');
+    document.getElementById('usernameInput').value = '';
+    document.getElementById('passwordInput').value = '';
   }
 
-  function generatePassword() {
-    const generatedPassword = Math.random().toString(36).slice(2);
-    document.getElementById('generatedPassword').textContent = generatedPassword;
+  function displayPasswords() {
+    const passwords = JSON.parse(localStorage.getItem('passwords')) || [];
+    const table = document.getElementById('passwordTable');
+    table.innerHTML = `<tr><th>Username</th><th>Password</th></tr>`;
+    passwords.forEach(entry => {
+      table.innerHTML += `<tr><td>${entry.username}</td><td>${entry.password}</td></tr>`;
+    });
   }
 
   function closePage() {
