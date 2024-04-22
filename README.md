@@ -1,10 +1,10 @@
 # PassPocket Web - Password Manager Web App
 
-PassPocket Web is a simple web app built with HTML and JavaScript for managing passwords. The app includes a sidebar navigation to access different sections: password entry, password generation, viewing stored passwords, and closing the app.
+PassPocket Web is a simple, yet modern web app built with HTML and JavaScript for managing passwords. The app includes a sidebar navigation to access different sections: password entry, password generation, viewing stored passwords, and closing the app.
 
 ## Features
 
-- **Password Entry**: Allows users to enter usernames and passwords and store them locally using the browser's local storage feature.
+- **Password Entry**: Allows users to enter usernames and passwords and store them locally using the browser's local storage feature, an delete the ones for apps they do not use anymore.
 - **Password Generation**: Generates random and secure passwords for use in webpages and applications.
 - **View Stored Passwords**: Displays the stored usernames and passwords in a table format.
 - **Closing Page**: Provides an option to close the web app.
